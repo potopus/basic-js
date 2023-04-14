@@ -20,7 +20,7 @@ const HALF_LIFE_PERIOD = 5730;
 function dateSample(sampleActive) {
   console.log(sampleActive);
   if (typeof sampleActive !== 'string') return false;
-  if(sampleActive.indexOf(' ') >= 0) return false;
+  if(sampleActive.indexOf(' ') >= 0|| sampleActive==='') return false;
   if (isNaN(sampleActive)) return false;
   if (!isFinite(sampleActive))return false;
   let numSampleActive = parseFloat(sampleActive)

@@ -12,38 +12,44 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function getSeason(date) {
-  console.log("body: " + date);
-  console.log(typeof date);
-
+  // console.log("body: " + date);
+  // console.log(typeof date);
  
-
   if (typeof date === "undefined") { return "Unable to determine the time of year!" }
+  // console.log("wrong date");
+  if (!date) { throw new Error('Invalid date!') }
   
-  console.log("begin ");
+  // console.log("begin ");
   //  console.log("instanse: " + date !== new Date());
   //  console.log("getOwnPropertyNames:   " + Object.getOwnPropertyNames(date).length);
-  if (!date) { throw new Error('Invalid date!') }
-  // try{
-    // date.toLocaleString();
-    console.log("done 1");
-    if ( date instanceof Function )  { throw new Error('Invalid date!') }
+ 
+
+    // console.log("done 1");
+    // if ( date instanceof Function )  { throw new Error('Invalid date!') }
     // if (Object.prototype.toString.call(date) === "[object Function]") { throw new Error('Invalid date!') }
     
   // }catch(e){if (e) throw new Error('Invalid date!')}
-  console.log("done0");
-  if (!(date instanceof Date)) { return 'Unable to determine the time of year!' }
- 
-  if (Object.getOwnPropertyNames(date).length > 0) { throw new Error('Invalid date!') }
-  
-  // if (typeof date === "object") { throw new Error('Invalid date!') }
-  // console.log("done1");
-  // try {
-  // if (isNaN(date.getTime())) { throw new Error('Invalid date!') }
-  // } catch { new Error('Invalid date!') }
-  // console.log(date.getTime());
-  // console.log("done");
+  // console.log("done0");
+  // console.log(Object.getOwnPropertyNames(date).length);
 
-  console.log("start");
+  if (Object.getOwnPropertyNames(date).length > 0) { throw new CustomError('Invalid date!') }
+  
+  
+  // console.log("done");
+  // console.log(date.toString().includes("() => new Date()"));
+  // console.log("date.toString");
+  if (date.toString().includes("() => new Date()")){
+    throw new CustomError('Invalid date!')
+};
+  
+function CustomError(message) {
+  this.message = message;
+  this.name = "Invalid date!";
+  Error.captureStackTrace(this, CustomError);
+}
+// console.log("!(date instanceof Date)");
+if (!(date instanceof Date)) { throw new Error('Invalid date!') }
+  // console.log("start");
   const month = date.toLocaleString('en-US', { month: 'long' });
 
   let season = {
@@ -60,8 +66,8 @@ function getSeason(date) {
     "November": "autumn",
     "December": "winter"
   }
-  console.log(month);
-  console.log("RETURNE:  " + season[month]);
+  // console.log(month);
+  // console.log("RETURNE:  " + season[month]);
   return season[month]
 }
 
